@@ -1,0 +1,53 @@
+/*
+ * Copyright (C) 2014 The Cat Hive Developers.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package stackman.protobuf;
+
+
+option optimize_for = SPEED;
+option java_package = "com.cathive.stackman.protobuf";
+option java_outer_classname = "StackManProtos";
+
+
+message StackTraceElement {
+  required string declaringClass = 1;
+  required string methodName = 2;
+  required string fileName = 3;
+  required int32 lineNumber = 4;
+  required bool native = 5 [default = false];
+}
+
+message Throwable {
+  required string detailMessage = 1;
+  optional Throwable cause = 2;
+  repeated StackTraceElement stackTrace = 3;
+}
+
+/**
+ * A log record, similar to what has been defined by the Java Logging API.
+ * See Java class "java.util.logging.LogRecord" for further details.
+ */
+message JULLogRecord {
+  required int32 level = 1 [default = 800]; // INFO
+  required int64 sequenceNumber = 2;
+  required string sourceClassName = 3;
+  required string sourceMethodName = 4;
+  required string message = 5;
+  required int32 threadId = 6;
+  required int64 millis = 7;
+  optional Throwable thrown = 8;
+  required string loggerName = 9;
+}
